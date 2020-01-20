@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {Text, View, StyleSheet, Button} from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import {Text, View, StyleSheet, Button, Alert} from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import GameOverScreen from '../screens/GameOverScreen';
@@ -8,37 +8,61 @@ const GameScreen = (props) => {
   const generateRandomNumber = (min, max, exclude) => {
     min = Math.ceil(min);
     max = Math.floor(max);
-    const randomNumber = Math.floor(Math.random()*(max-min)) + min; 
     
+    const rnd = Math.random();    
+    const randomNumber = Math.floor(rnd*(max-min)) + min; 
+
     if(randomNumber === exclude)
       generateRandomNumber(min, max, exclude);
     else
-      return randomNumber;
-  };
+      return randomNumber;            
+    };
 
-  const [guessedNumber, setGuessedNumber] = useState(generateRandomNumber(0,100,props.userNumber));
-  const [minNumber, setMinNumber] = useState(0);
-  const [maxNumber, setMaxNumber] = useState(100);
+  //UseRef variables survive Render cycles. 
+  //Similar to useState variables but re-render does not happen when these values change 
+  minNumber = useRef(0);
+  maxNumber = useRef(100);
 
-  const lowerButtonHandler = () => {          
-    setGuessedNumber(generateRandomNumber(minNumber, guessedNumber, ''));
-    setMaxNumber(guessedNumber); 
-  };
-
-  const greaterButtonHandler = () => {                  
-    setGuessedNumber(generateRandomNumber(guessedNumber, maxNumber, ''));
-    setMinNumber(guessedNumber); 
-  };
+  const [guessedNumber, setGuessedNumber] = useState(generateRandomNumber(minNumber.current,maxNumber.current,props.userNumber));
   
 
-  let GameOverMessage = <Text> </Text>;
-  
-  if(guessedNumber === props.userNumber)
-    props.onGameOver(true);
-    //GameOverMessage = <GameOverScreen />;
 
-  console.log("minNumber:"+ minNumber);
-  console.log("maxNumber:"+ maxNumber);
+  const nextGuessHandler = (direction) => {
+    //Validate
+    if( (direction === 'lower' && guessedNumber < props.userNumber) || 
+        (direction === 'greater' && guessedNumber > props.userNumber)) {
+          Alert.alert(
+            'Wrong Direction',
+            'You know that is wrong!!', 
+            [
+              {text: "Okay", style:'destructive'}
+            ]
+          );
+          return;
+        }
+    
+    //adjust lower and upper bounds of next random number 
+    if(direction === 'lower')
+        maxNumber.current = guessedNumber;
+    else
+        minNumber.current = guessedNumber;
+            
+    //Guess next random number
+    const nextGuess = generateRandomNumber(minNumber.current, maxNumber.current, guessedNumber)
+    setGuessedNumber(nextGuess);
+          
+  };
+
+  const {userNumber, onGameOver}  = props;
+  //useEffect React hook allows to logic to be executed AFTER every Render cycle
+  //If you pass the optional dependencies, then useEffect only executes logic if any of the dependency values changed
+  useEffect(() => {  
+    if(guessedNumber === props.userNumber)
+      props.onGameOver(true);  
+  },[guessedNumber, userNumber, onGameOver]);
+
+  console.log("minNumber:"+ minNumber.current);
+  console.log("maxNumber:"+ maxNumber.current);
 
   return (
     <View style={styles.screen}>
@@ -46,13 +70,12 @@ const GameScreen = (props) => {
       <NumberContainer>{guessedNumber}</NumberContainer>  
       <Card style={styles.buttonContainer}>
         <View style={styles.button}>        
-          <Button title="LOWER"  onPress={lowerButtonHandler} />
+          <Button title="LOWER"  onPress={nextGuessHandler.bind(this, 'lower')} />
         </View>
         <View style={styles.button}>
-          <Button title="GREATER" onPress={greaterButtonHandler} />
+          <Button title="GREATER" onPress={nextGuessHandler.bind(this, 'greater')} />
         </View>                
       </Card>      
-      {GameOverMessage}
     </View>
     );
 };
