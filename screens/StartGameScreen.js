@@ -1,16 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View, StyleSheet, TextInput, Button } from 'react-native';
 
 import Card from '../components/Card';
 import Colors from '../constants/colors';
+import Input from '../components/Input';
 
 const StartGameScreen = (props) =>  {
+  const [enteredValue, setEnteredValue] = useState('');
+  const InputTextHandler = (inputText) => {
+    setEnteredValue(inputText.replace(/[^0-9]/g, ''));
+  };
   return (
     <View style={styles.screen}>
       <Text style={styles.title}>Start a New Game</Text>
+
       <Card style={styles.inputContainer}>
         <Text>Select a Number</Text>
-        <TextInput />
+
+        <Input 
+          style={styles.input}
+          blurOnSubmit
+          autoFocus='true'
+          autoCapitalize='none'      
+          spellCheck='none'
+          keyboardType='number-pad'
+          returnType='done'
+          maxLength={2}       
+          value={enteredValue}
+          onChangeText={InputTextHandler}
+        />
         <View style={styles.buttonContainer} >
           <View style={styles.button}>
             <Button title="Reset" onPress={() => {}} color = {Colors.accent}/>
@@ -19,7 +37,8 @@ const StartGameScreen = (props) =>  {
             <Button title="Confirm" onPress={() => {}} color = {Colors.primary} />
           </View>                    
         </View>
-      </Card>    
+      </Card> 
+
     </View>
   );
 };
@@ -48,6 +67,10 @@ const styles = StyleSheet.create({
   button: {
     width: '40%',
   },
+  input: {
+    width: 50, 
+    textAlign: 'center'
+  }
 });
 
 export default StartGameScreen;
