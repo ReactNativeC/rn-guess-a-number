@@ -4,6 +4,7 @@ import { Text, View, StyleSheet, TextInput, Button, TouchableWithoutFeedback, Ke
 import Card from '../components/Card';
 import Colors from '../constants/colors';
 import Input from '../components/Input';
+import NumberContainer from '../components/NumberContainer';
 
 const StartGameScreen = (props) =>  {
   const [enteredValue, setEnteredValue] = useState('');
@@ -26,10 +27,9 @@ const StartGameScreen = (props) =>  {
         Alert.alert(
           'Invalid Number',
           'Number must be between 0 and 99',
-          [
-            { text: 'May be Later', style: 'destructive', onPress: () => console.log("May be Later pressed")},      
-            { text: 'Cancel', style: 'cancel', onPress: () => console.log("Cancel pressed") },
-            { text: 'OK', style: 'default', onPress: ()=> console.log("OK button pressed") },                            
+          [               
+            { text: 'Cancel', style: 'cancel', onPress: () => {} },
+            { text: 'OK', style: 'default', onPress: ()=> {} },                            
           ]
         );
         return;
@@ -37,12 +37,18 @@ const StartGameScreen = (props) =>  {
     setConfirmed(true);
     setSelectedNumber(chosenNumber);
     setEnteredValue('');
+    Keyboard.dismiss();
   };
 
   let ConfirmedOutput;
 
   if(confirmed) {
-    ConfirmedOutput = <Text>Chosen Number: {selectedNumber}</Text>
+    ConfirmedOutput = 
+      <Card style={styles.summaryContainer}>
+        <Text>You Selected</Text>
+        <NumberContainer>{selectedNumber}</NumberContainer>
+        <Button title="START GAME" onPress={ () => {console.log("start game pressed")}} />        
+      </Card>
   }
 
   return (
@@ -61,11 +67,11 @@ const StartGameScreen = (props) =>  {
             returnType='done'
             maxLength={2}       
             value={enteredValue}
-            onChangeText={InputTextHandler}
+            onChangeText={InputTextHandler}           
           />
           <View style={styles.buttonContainer} >
             <View style={styles.button}>
-              <Button title="Reset" onPress={ResetInputHandler} color = {Colors.accent}/>
+              <Button title="Reset" onPress={ResetInputHandler} color = {Colors.accent} />
             </View>
             <View style={styles.button}>
               <Button title="Confirm" onPress={ConfirmInputHandler} color = {Colors.primary} />
@@ -105,6 +111,10 @@ const styles = StyleSheet.create({
   input: {
     width: 50, 
     textAlign: 'center'
+  },
+  summaryContainer: {
+    marginTop: 20,
+    alignItems: 'center',   
   }
 });
 
