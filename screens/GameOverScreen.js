@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     
   },
   gameOverTitle: {
-    fontSize: 60, 
+    fontSize: 50, 
     color: Colors.accent
   }, 
   startNewGameTitle: {
