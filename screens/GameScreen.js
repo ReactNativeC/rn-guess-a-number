@@ -24,9 +24,8 @@ const GameScreen = (props) => {
   maxNumber = useRef(100);
 
   const [guessedNumber, setGuessedNumber] = useState(generateRandomNumber(minNumber.current,maxNumber.current,props.userNumber));
+  const [roundCount, setRoundCount] = useState(0);
   
-
-
   const nextGuessHandler = (direction) => {
     //Validate
     if( (direction === 'lower' && guessedNumber < props.userNumber) || 
@@ -50,7 +49,9 @@ const GameScreen = (props) => {
     //Guess next random number
     const nextGuess = generateRandomNumber(minNumber.current, maxNumber.current, guessedNumber)
     setGuessedNumber(nextGuess);
-          
+    
+    //Keep track of guess count
+    setRoundCount(roundCount => roundCount +1);
   };
 
   const {userNumber, onGameOver}  = props;
@@ -58,8 +59,8 @@ const GameScreen = (props) => {
   //If you pass the optional dependencies, then useEffect only executes logic if any of the dependency values changed
   useEffect(() => {  
     if(guessedNumber === props.userNumber)
-      props.onGameOver(true);  
-  },[guessedNumber, userNumber, onGameOver]);
+      props.onGameOver(roundCount);  
+  },[guessedNumber, userNumber, onGameOver, roundCount]);
 
   console.log("minNumber:"+ minNumber.current);
   console.log("maxNumber:"+ maxNumber.current);

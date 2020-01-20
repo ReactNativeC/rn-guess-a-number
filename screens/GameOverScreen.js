@@ -8,9 +8,10 @@ const GameOverScreen = (props) => {
     <View style={styles.screen}>
       <View style={styles.gameOverCard}>
         <Text style={styles.gameOverTitle}>Game Over</Text>
+        <Text>Guess Rounds: {props.rounds}</Text>
       </View>  
    
-      <TouchableOpacity activeOpacity={0.65} onPress={() => props.onGameOver(false)}>
+      <TouchableOpacity activeOpacity={0.65} onPress={() => props.onReplay()}>
         <Card style={styles.startNewGameCard}>
           <Text style={styles.startNewGameTitle}>Start a New Game!</Text>
         </Card>

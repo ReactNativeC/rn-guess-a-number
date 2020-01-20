@@ -8,26 +8,26 @@ import GameOverScreen from './screens/GameOverScreen';
 
 export default function App() {
   const [userNumber, setUserNumber] = useState();  
-  const [gameOver, setGameOver] = useState(false);
+  const [guessRounds, setGuessRounds] = useState(0);
 
   const onGameStarted = (selectedNumber) => {
     setUserNumber(selectedNumber);
     console.log("onGameStarted invoked")
   }
-  const onGameOver = (isGameOver) => {
-    setGameOver(isGameOver);
-    
-    if(!isGameOver)
-      onGameStarted('');
+  const onGameOver = (roundCount) => {
+    setGuessRounds(roundCount);            
+  }
+  const onRestart = () => {
+    setUserNumber('');
+    setGuessRounds(0);
   }
 
   let content = <StartGameScreen onStartNewGame={onGameStarted} />;
   
-  if(userNumber)
-    content = <GameScreen userNumber={userNumber} onGameOver={onGameOver}/>;
-
-  if(gameOver)
-    content = <GameOverScreen onGameOver={onGameOver} />
+  if(userNumber && guessRounds <=0)
+    content = <GameScreen userNumber={userNumber} onGameOver={onGameOver}  />;
+  else if(guessRounds > 0)
+    content = <GameOverScreen rounds={guessRounds} onReplay={onRestart} />
 
   return (
     <View style={styles.screen}>
