@@ -47,7 +47,7 @@ const StartGameScreen = (props) =>  {
       <Card style={styles.summaryContainer}>
         <Text>You Selected</Text>
         <NumberContainer>{selectedNumber}</NumberContainer>
-        <Button title="START GAME" onPress={ () => {console.log("start game pressed")}} />        
+        <Button title="START GAME" onPress={() => props.onStartNewGame(selectedNumber)} />        
       </Card>
   }
 
@@ -62,7 +62,7 @@ const StartGameScreen = (props) =>  {
             blurOnSubmit
             autoFocus='true'
             autoCapitalize='none'      
-            spellCheck='none'
+            spellCheck='false'
             keyboardType='number-pad'
             returnType='done'
             maxLength={2}       
