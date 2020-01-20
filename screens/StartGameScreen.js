@@ -60,9 +60,9 @@ const StartGameScreen = (props) =>  {
           <Input 
             style={styles.input}
             blurOnSubmit
-            autoFocus='true'
+            autoFocus={true}
             autoCapitalize='none'      
-            spellCheck='false'
+            spellCheck={false}
             keyboardType='number-pad'
             returnType='done'
             maxLength={2}       

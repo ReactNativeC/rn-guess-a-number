@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {Text, View, StyleSheet, Button} from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
+import GameOverScreen from '../screens/GameOverScreen';
 
 const GameScreen = (props) => {
   const generateRandomNumber = (min, max, exclude) => {
@@ -31,8 +32,10 @@ const GameScreen = (props) => {
   
 
   let GameOverMessage = <Text> </Text>;
+  
   if(guessedNumber === props.userNumber)
-    GameOverMessage = <Text>Game Over</Text>;
+    props.onGameOver(true);
+    //GameOverMessage = <GameOverScreen />;
 
   console.log("minNumber:"+ minNumber);
   console.log("maxNumber:"+ maxNumber);
