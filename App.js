@@ -17,7 +17,7 @@ export default function App() {
   const onGameOver = (roundCount) => {
     setGuessRounds(roundCount);            
   }
-  const onRestart = () => {
+  const onNewGame = () => {
     setUserNumber('');
     setGuessRounds(0);
   }
@@ -27,7 +27,7 @@ export default function App() {
   if(userNumber && guessRounds <=0)
     content = <GameScreen userNumber={userNumber} onGameOver={onGameOver}  />;
   else if(guessRounds > 0)
-    content = <GameOverScreen rounds={guessRounds} onReplay={onRestart} />
+    content = <GameOverScreen rounds={guessRounds} userNumber={userNumber} onReplay={onNewGame} />
 
   return (
     <View style={styles.screen}>
