@@ -5,14 +5,40 @@ import Header from "./components/Header";
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
 import GameOverScreen from './screens/GameOverScreen';
+import * as Font from 'expo-font';
+import { AppLoading } from 'expo';
+
+const fetchFonts = () => {
+  return (
+    Font.loadAsync({
+      "OpenSans": require('./fonts/OpenSans-Regular.ttf'),
+      "OpenSans-Bold": require('./fonts/OpenSans-Bold.ttf'),
+      "Roboto": require('./fonts/Roboto-Regular.ttf'),
+      "Roboto-Bold": require('./fonts/Roboto-Regular.ttf'),
+      "Roboto-Light": require('./fonts/Roboto-Light.ttf'),
+      "Roboto-Medium": require('./fonts/Roboto-Medium.ttf')
+    })
+  );
+};
 
 export default function App() {
   const [userNumber, setUserNumber] = useState();  
   const [guessRounds, setGuessRounds] = useState(0);
+  const [dataLoaded, setDataLoaded] = useState(false);
+  
+  if(!dataLoaded)
+  {
+    return (
+    <AppLoading  
+       startAsync={fetchFonts}
+       onFinish={()=>{setDataLoaded(true);}}
+       onError={(err)=>{console.log(err)}}
+    />
+    )
+  }
 
   const onGameStarted = (selectedNumber) => {
-    setUserNumber(selectedNumber);
-    console.log("onGameStarted invoked")
+    setUserNumber(selectedNumber);    
   }
   const onGameOver = (roundCount) => {
     setGuessRounds(roundCount);            
