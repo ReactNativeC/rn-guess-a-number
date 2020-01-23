@@ -2,19 +2,20 @@ import React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Colors from '../constants/colors';
 import Card from '../components/Card';
+import TitleText from '../components/TitleText';
 
 const GameOverScreen = (props) => {
   return (
     <View style={styles.screen}>
       <View style={styles.gameOverCard}>
-        <Text style={styles.gameOverTitle}>Game Over</Text>
-        <Text>Guess Rounds: {props.rounds}</Text>
-        <Text>User number was: {props.userNumber}</Text>
+        <TitleText style={styles.gameOverTitle}>Game Over</TitleText>
+        <TitleText>Guess Rounds: {props.rounds}</TitleText>
+        <TitleText>User number was: {props.userNumber}</TitleText>
       </View>  
    
       <TouchableOpacity activeOpacity={0.65} onPress={() => props.onReplay()}>
         <Card style={styles.startNewGameCard}>
-          <Text style={styles.startNewGameTitle}>Start a New Game!</Text>
+          <TitleText style={styles.startNewGameTitle}>Start a New Game!</TitleText>
         </Card>
       </TouchableOpacity>      
     </View>

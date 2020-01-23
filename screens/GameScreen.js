@@ -3,6 +3,7 @@ import {Text, View, StyleSheet, Button, Alert} from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import GameOverScreen from '../screens/GameOverScreen';
+import TitleText from '../components/TitleText';
 
 const GameScreen = (props) => {
   const generateRandomNumber = (min, max, exclude) => {
@@ -67,8 +68,8 @@ const GameScreen = (props) => {
 
   return (
     <View style={styles.screen}>
-      <Text>Opponent's Guess</Text>
-      <NumberContainer>{guessedNumber}</NumberContainer>  
+      <TitleText>Opponent's Guess</TitleText>
+      <NumberContainer style={{marginTop:40}}>{guessedNumber}</NumberContainer>  
       <Card style={styles.buttonContainer}>
         <View style={styles.button}>        
           <Button title="LOWER"  onPress={nextGuessHandler.bind(this, 'lower')} />

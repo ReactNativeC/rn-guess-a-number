@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, TextInput, Button, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import { Text, View, StyleSheet, TextInput, Button, TouchableWithoutFeedback, Keyboard, Alert, TouchableOpacity } from 'react-native';
 
 import Card from '../components/Card';
 import Colors from '../constants/colors';
 import Input from '../components/Input';
 import NumberContainer from '../components/NumberContainer';
+import BodyText from '../components/BodyText';
+import GlobalStyles from '../constants/global-styles';
+import TitleText from '../components/TitleText';
 
 const StartGameScreen = (props) =>  {
   const [enteredValue, setEnteredValue] = useState('');
@@ -45,7 +48,7 @@ const StartGameScreen = (props) =>  {
   if(confirmed) {
     ConfirmedOutput = 
       <Card style={styles.summaryContainer}>
-        <Text>You Selected</Text>
+        <Text style={GlobalStyles.bodyText}>You Selected</Text>
         <NumberContainer>{selectedNumber}</NumberContainer>
         <Button title="START GAME" onPress={() => props.onStartNewGame(selectedNumber)} />        
       </Card>
@@ -54,9 +57,9 @@ const StartGameScreen = (props) =>  {
   return (
     <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss()}}>
       <View style={styles.screen}>
-        <Text style={styles.title}>Start a New Item</Text>
+        <TitleText style={styles.title}>Start a New Item</TitleText>
         <Card style={styles.inputContainer}>
-          <Text>Select a Number</Text>
+          <Text style={GlobalStyles.bodyText}>Select a Number</Text>
           <Input 
             style={styles.input}
             blurOnSubmit
@@ -70,12 +73,16 @@ const StartGameScreen = (props) =>  {
             onChangeText={InputTextHandler}           
           />
           <View style={styles.buttonContainer} >
-            <View style={styles.button}>
-              <Button title="Reset" onPress={ResetInputHandler} color = {Colors.accent} />
-            </View>
-            <View style={styles.button}>
-              <Button title="Confirm" onPress={ConfirmInputHandler} color = {Colors.primary} />
-            </View>                    
+            <TouchableOpacity style={styles.button}  onPress={ResetInputHandler} activeOpacity={0.6}>
+              <Card style={{padding:5, alignItems:'center'}}>
+                <TitleText style={{color:Colors.accent}}>Reset</TitleText>
+              </Card>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button}  onPress={ConfirmInputHandler} activeOpacity={0.6}>
+              <Card style={{padding:5, alignItems:'center'}}>
+                <TitleText style={{color:Colors.primary}}>Confirm</TitleText>
+              </Card>
+            </TouchableOpacity>                  
           </View>
         </Card> 
         {ConfirmedOutput}
@@ -94,17 +101,17 @@ const styles = StyleSheet.create({
     width: 300, 
     maxWidth: '80%',
     alignItems: 'center',
+    marginVertical: 10,
   },
   buttonContainer: {    
     flexDirection: 'row',
     width: '100%',    
     justifyContent: 'space-between',    
     paddingHorizontal: 15,
+    marginTop: 20,
   }, 
-  title: {
-    fontSize: 20, 
-    marginVertical: 10,
-    fontFamily: 'OpenSans-Bold',
+  title: {    
+    marginVertical: 20,    
   },
   button: {
     width: '40%',

@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Colors from '../constants/colors';
+import { processFontFamily } from 'expo-font';
 
 const Header = props => {
   return (
@@ -20,8 +21,10 @@ const styles =  StyleSheet.create({
     alignItems: 'center',     
   },
   headerTitle: {
-    fontSize: 18, 
-    textAlign: 'center'
+    fontSize: 25, 
+    textAlign: 'center',
+    fontFamily: 'OpenSans-Bold',
+    color: 'white',
   },
 });
 
