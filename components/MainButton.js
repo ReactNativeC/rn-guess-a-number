@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20, 
     backgroundColor: Colors.primary,
     borderRadius: 20,
+    alignItems:'center'
   },
   buttonText: {
     fontFamily: 'OpenSans-Bold', 
