@@ -10,7 +10,7 @@ const GameOverScreen = (props) => {
       <TitleText style={styles.gameOverTitle}>Game Over</TitleText>
       <View style={styles.ImageContainer}>
         <Image style={styles.image}
-          source={require('../assets/images/mona-lisa.jpg')} 
+          source={{uri: 'https://i.ytimg.com/vi/YxfnUPqWV0k/maxresdefault.jpg'}} 
           resizeMode='cover'
         />
       </View>
