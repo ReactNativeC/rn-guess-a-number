@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import {Text, View, StyleSheet, Button, Alert} from 'react-native';
+import {Text, View, StyleSheet, Button, Alert, ScrollView} from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import GameOverScreen from '../screens/GameOverScreen';
 import TitleText from '../components/TitleText';
 import MainButton from '../components/MainButton';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import BodyText from '../components/BodyText';
 
 const GameScreen = (props) => {
   const generateRandomNumber = (min, max, exclude) => {
@@ -26,8 +27,9 @@ const GameScreen = (props) => {
   minNumber = useRef(0);
   maxNumber = useRef(100);
 
-  const [guessedNumber, setGuessedNumber] = useState(generateRandomNumber(minNumber.current,maxNumber.current,props.userNumber));
-  const [roundCount, setRoundCount] = useState(0);
+  var currentGuess = generateRandomNumber(minNumber.current,maxNumber.current,props.userNumber);
+  const [guessedNumber, setGuessedNumber] = useState(currentGuess);
+  const [guessList, setGuessList] = useState([currentGuess]);
   
   const nextGuessHandler = (direction) => {
     //Validate
@@ -39,7 +41,7 @@ const GameScreen = (props) => {
             [
               {text: "Okay", style:'destructive'}
             ]
-          );
+          );5454
           return;
         }
     
@@ -47,14 +49,14 @@ const GameScreen = (props) => {
     if(direction === 'lower')
         maxNumber.current = guessedNumber;
     else
-        minNumber.current = guessedNumber;
+        minNumber.current = guessedNumber + 1;
             
     //Guess next random number
     const nextGuess = generateRandomNumber(minNumber.current, maxNumber.current, guessedNumber)
     setGuessedNumber(nextGuess);
     
     //Keep track of guess count
-    setRoundCount(roundCount => roundCount +1);
+    setGuessList(varGuessList => [nextGuess, ...varGuessList]);
   };
 
   const {userNumber, onGameOver}  = props;
@@ -62,8 +64,8 @@ const GameScreen = (props) => {
   //If you pass the optional dependencies, then useEffect only executes logic if any of the dependency values changed
   useEffect(() => {  
     if(guessedNumber === props.userNumber)
-      props.onGameOver(roundCount);  
-  },[guessedNumber, userNumber, onGameOver, roundCount]);
+      props.onGameOver(guessList.length);  
+  },[guessedNumber, userNumber, onGameOver, guessList]);
 
   console.log("minNumber:"+ minNumber.current);
   console.log("maxNumber:"+ maxNumber.current);
@@ -80,9 +82,19 @@ const GameScreen = (props) => {
         <MainButton onPress={nextGuessHandler.bind(this, 'greater')}>
           <MaterialIcons name="add" size={24} />
         </MainButton>                
-      </Card>      
+      </Card>            
+        <ScrollView style={styles.list}>
+          {          
+              guessList.map((guess, index) => (              
+              <View key={guess} style={styles.listItem}>
+                <BodyText>#{guessList.length-index}</BodyText>
+                <BodyText>{guess}</BodyText>
+              </View>          
+              ))            
+          }
+        </ScrollView>     
     </View>
-    );
+    );34
 };
 
 const styles = StyleSheet.create({
@@ -97,6 +109,21 @@ const styles = StyleSheet.create({
     width: 300, 
     maxWidth: '80%'
   }, 
+  listItem: {    
+    borderWidth: 0.5,
+    width: '100%',
+    marginVertical: 5,
+    borderRadius: 10,
+    padding: 5,    
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    
+  }, 
+  list: {
+    flex: 1,
+    width: '60%',
+    marginTop: 20,
+  }
 });
 
 export default GameScreen;
