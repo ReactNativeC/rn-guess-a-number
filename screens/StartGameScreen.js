@@ -57,7 +57,7 @@ const StartGameScreen = (props) =>  {
   return (
     <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss()}}>
       <View style={styles.screen}>
-        <TitleText style={styles.title}>Start a New Item</TitleText>
+        <TitleText style={styles.title}>Start a New Game</TitleText>
         <Card style={styles.inputContainer}>
           <Text style={GlobalStyles.bodyText}>Select a Number</Text>
           <Input 
