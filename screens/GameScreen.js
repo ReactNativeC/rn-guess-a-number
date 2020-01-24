@@ -91,7 +91,7 @@ const GameScreen = (props) => {
         </MainButton>                
       </Card>    
       <View style={styles.listContainer}>
-        <ScrollView contentContainerStyle={{alignItems:'center'}} >
+        <ScrollView contentContainerStyle={styles.list} >
           {
             guessList.map((guess, index) => (
               renderListItem(guess, index)
@@ -117,9 +117,9 @@ const styles = StyleSheet.create({
   }, 
   listItem: {    
     borderWidth: 1,
-    marginVertical: 5,
+    marginVertical: 30,
     borderRadius: 10,
-    padding: 5,    
+    padding: 10,    
     flexDirection: 'row',
     justifyContent: 'space-around',  
     backgroundColor: 'white',
@@ -127,6 +127,11 @@ const styles = StyleSheet.create({
     width:'50%',
   
   }, 
+  list: {
+    alignItems: 'center',    
+    justifyContent: 'flex-end',
+    flexGrow: 1,
+  },
   listContainer: {
     flex: 1,
     width: '80%',
