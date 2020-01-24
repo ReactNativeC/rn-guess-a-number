@@ -30,7 +30,14 @@ const GameScreen = (props) => {
   var currentGuess = generateRandomNumber(minNumber.current,maxNumber.current,props.userNumber);
   const [guessedNumber, setGuessedNumber] = useState(currentGuess);
   const [guessList, setGuessList] = useState([currentGuess]);
-  
+
+  const RenderItem = (guess, index) => (
+    <View key={guess} style={styles.listItem}>
+      <BodyText>#{guessList.length-index}</BodyText>
+      <BodyText>{guess}</BodyText>
+    </View> 
+    ) 
+      
   const nextGuessHandler = (direction) => {
     //Validate
     if( (direction === 'lower' && guessedNumber < props.userNumber) || 
@@ -86,10 +93,7 @@ const GameScreen = (props) => {
         <ScrollView style={styles.list}>
           {          
               guessList.map((guess, index) => (              
-              <View key={guess} style={styles.listItem}>
-                <BodyText>#{guessList.length-index}</BodyText>
-                <BodyText>{guess}</BodyText>
-              </View>          
+                RenderItem(guess, index)
               ))            
           }
         </ScrollView>     
