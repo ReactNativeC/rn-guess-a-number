@@ -31,13 +31,13 @@ const GameScreen = (props) => {
   const [guessedNumber, setGuessedNumber] = useState(currentGuess);
   const [guessList, setGuessList] = useState([currentGuess]);
 
-  const RenderItem = (guess, index) => (
+  const renderListItem = (guess, index) => (
     <View key={guess} style={styles.listItem}>
       <BodyText>#{guessList.length-index}</BodyText>
       <BodyText>{guess}</BodyText>
     </View> 
     ) 
-      
+
   const nextGuessHandler = (direction) => {
     //Validate
     if( (direction === 'lower' && guessedNumber < props.userNumber) || 
@@ -48,7 +48,7 @@ const GameScreen = (props) => {
             [
               {text: "Okay", style:'destructive'}
             ]
-          );5454
+          );
           return;
         }
     
@@ -89,14 +89,16 @@ const GameScreen = (props) => {
         <MainButton onPress={nextGuessHandler.bind(this, 'greater')}>
           <MaterialIcons name="add" size={24} />
         </MainButton>                
-      </Card>            
-        <ScrollView style={styles.list}>
-          {          
-              guessList.map((guess, index) => (              
-                RenderItem(guess, index)
-              ))            
-          }
-        </ScrollView>     
+      </Card>    
+      <View style={styles.listContainer}>
+        <ScrollView contentContainerStyle={{alignItems:'center'}} >
+          {
+            guessList.map((guess, index) => (
+              renderListItem(guess, index)
+            ))
+          }  
+        </ScrollView>        
+      </View>
     </View>
     );34
 };
@@ -114,18 +116,20 @@ const styles = StyleSheet.create({
     maxWidth: '80%'
   }, 
   listItem: {    
-    borderWidth: 0.5,
-    width: '100%',
+    borderWidth: 1,
     marginVertical: 5,
     borderRadius: 10,
     padding: 5,    
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    
+    justifyContent: 'space-around',  
+    backgroundColor: 'white',
+    borderColor: '#ccc', 
+    width:'50%',
+  
   }, 
-  list: {
+  listContainer: {
     flex: 1,
-    width: '60%',
+    width: '80%',
     marginTop: 20,
   }
 });
