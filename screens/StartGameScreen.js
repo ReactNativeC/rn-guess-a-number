@@ -74,16 +74,8 @@ const StartGameScreen = (props) =>  {
             onChangeText={InputTextHandler}           
           />
           <View style={styles.buttonContainer} >
-            <TouchableOpacity style={styles.button}  onPress={ResetInputHandler} activeOpacity={0.6}>
-              <Card style={{padding:5, alignItems:'center'}}>
-                <TitleText style={{color:Colors.accent}}>Reset</TitleText>
-              </Card>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button}  onPress={ConfirmInputHandler} activeOpacity={0.6}>
-              <Card style={{padding:5, alignItems:'center'}}>
-                <TitleText style={{color:Colors.primary}}>Confirm</TitleText>
-              </Card>
-            </TouchableOpacity>                  
+            <MainButton onPress={ResetInputHandler}> Reset </MainButton>
+            <MainButton onPress={ConfirmInputHandler}>Confirm</MainButton>                   
           </View>
         </Card> 
         {ConfirmedOutput}
