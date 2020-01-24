@@ -3,24 +3,20 @@ import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Colors from '../constants/colors';
 import Card from '../components/Card';
 import TitleText from '../components/TitleText';
-
+import MainButton from '../components/MainButton';
 const GameOverScreen = (props) => {
   return (
     <View style={styles.screen}>     
-      <TitleText style={styles.gameOverTitle}>Game Over</TitleText>
+      <TitleText style={styles.gameOverTitle}> BUILDING </TitleText>
       <View style={styles.ImageContainer}>
         <Image style={styles.image}
-          source={{uri: 'https://i.ytimg.com/vi/YxfnUPqWV0k/maxresdefault.jpg'}} 
+          source={{uri: 'https://www.fodors.com/wp-content/uploads/2019/07/NeedToKnowNYC__HERO_Midtown-West.jpg'}} 
           resizeMode='cover'
         />
       </View>
       <TitleText style={styles.messageText}>Number of Guess Rounds are <TitleText style={styles.messageStats}>{props.rounds}</TitleText> and the user number was: <TitleText style={styles.messageStats}>{props.userNumber}</TitleText></TitleText>
-         
-      <TouchableOpacity activeOpacity={0.65} onPress={() => props.onReplay()} style={styles.button}>
-        <Card style={styles.startNewGameCard}>
-          <TitleText style={styles.startNewGameTitle}>Start a New Game</TitleText>
-        </Card>
-      </TouchableOpacity>      
+      
+      <MainButton style={styles.button} onPress={props.onReplay} >START NEW ITEM</MainButton>   
     </View>
   );
 };
@@ -52,7 +48,7 @@ const styles = StyleSheet.create({
     height: '100%',
   }, 
   button: {
-    marginVertical: 30,
+    marginVertical: 30,        
   },
   messageText: {
     marginHorizontal: 15,
