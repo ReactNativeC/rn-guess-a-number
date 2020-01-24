@@ -4,6 +4,8 @@ import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import GameOverScreen from '../screens/GameOverScreen';
 import TitleText from '../components/TitleText';
+import MainButton from '../components/MainButton';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 
 const GameScreen = (props) => {
   const generateRandomNumber = (min, max, exclude) => {
@@ -68,15 +70,16 @@ const GameScreen = (props) => {
 
   return (
     <View style={styles.screen}>
-      <TitleText>Opponent's Guess</TitleText>
+      <TitleText>Opponent's Guess</TitleText>                
       <NumberContainer style={{marginTop:40}}>{guessedNumber}</NumberContainer>  
+      
       <Card style={styles.buttonContainer}>
-        <View style={styles.button}>        
-          <Button title="LOWER"  onPress={nextGuessHandler.bind(this, 'lower')} />
-        </View>
-        <View style={styles.button}>
-          <Button title="GREATER" onPress={nextGuessHandler.bind(this, 'greater')} />
-        </View>                
+        <MainButton onPress={nextGuessHandler.bind(this, 'lower')}>
+          <Ionicons name="md-remove" size={24} />
+        </MainButton>  
+        <MainButton onPress={nextGuessHandler.bind(this, 'greater')}>
+          <MaterialIcons name="add" size={24} />
+        </MainButton>                
       </Card>      
     </View>
     );
@@ -94,9 +97,6 @@ const styles = StyleSheet.create({
     width: 300, 
     maxWidth: '80%'
   }, 
-  button: {
-    width:'40%'
-  }
 });
 
 export default GameScreen;

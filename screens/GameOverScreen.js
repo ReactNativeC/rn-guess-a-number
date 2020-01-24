@@ -7,7 +7,7 @@ import MainButton from '../components/MainButton';
 const GameOverScreen = (props) => {
   return (
     <View style={styles.screen}>     
-      <TitleText style={styles.gameOverTitle}> BUILDING </TitleText>
+      <TitleText style={styles.gameOverTitle}> Game Over </TitleText>
       <View style={styles.ImageContainer}>
         <Image style={styles.image}
           source={{uri: 'https://www.fodors.com/wp-content/uploads/2019/07/NeedToKnowNYC__HERO_Midtown-West.jpg'}} 
@@ -16,7 +16,7 @@ const GameOverScreen = (props) => {
       </View>
       <TitleText style={styles.messageText}>Number of Guess Rounds are <TitleText style={styles.messageStats}>{props.rounds}</TitleText> and the user number was: <TitleText style={styles.messageStats}>{props.userNumber}</TitleText></TitleText>
       
-      <MainButton style={styles.button} onPress={props.onReplay} >START NEW ITEM</MainButton>   
+      <MainButton style={styles.button} onPress={props.onReplay} >START NEW Game</MainButton>   
     </View>
   );
 };
