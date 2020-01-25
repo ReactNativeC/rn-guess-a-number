@@ -96,7 +96,9 @@ const styles = StyleSheet.create({
   }, 
   inputContainer: {
     width: Dimensions.get('window').width, 
-    maxWidth: '90%',
+    width: '90%',
+    minWidth: 270,
+    maxWidth: '95%',
     alignItems: 'center',
     marginVertical: 10,
   },
@@ -108,7 +110,6 @@ const styles = StyleSheet.create({
     marginVertical: Dimensions.get('window').height < 600 ? 5 : 30,
   }, 
   button: {
-    //minWidth: 120
     width: Dimensions.get('window').width / 3.4,    
   },
   input: {
