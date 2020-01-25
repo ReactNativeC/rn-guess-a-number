@@ -16,8 +16,9 @@ const GameScreen = (props) => {
     
     const rnd = Math.random();    
     const randomNumber = Math.floor(rnd*(max-min)) + min; 
-
-    if(randomNumber === exclude)
+    
+    // added max-min > 2 to avoiding infinite recursion loop
+    if(randomNumber === exclude && max-min > 2)
       generateRandomNumber(min, max, exclude);
     else
       return randomNumber;            
@@ -30,7 +31,7 @@ const GameScreen = (props) => {
 
   var currentGuess = generateRandomNumber(minNumber.current,maxNumber.current,props.userNumber);
   const [guessedNumber, setGuessedNumber] = useState(currentGuess);
-  const [guessList, setGuessList] = useState([currentGuess.toString()]);
+  const [guessList, setGuessList] = useState([currentGuess? currentGuess.toString() : '']);
 
   const renderListItem = (listLength, itemData) => (
     <View  style={styles.listItem}>
@@ -74,9 +75,6 @@ const GameScreen = (props) => {
     if(guessedNumber === props.userNumber)
       props.onGameOver(guessList.length);  
   },[guessedNumber, userNumber, onGameOver, guessList]);
-
-  console.log("minNumber:"+ minNumber.current);
-  console.log("maxNumber:"+ maxNumber.current);
 
   return (
     <View style={styles.screen}>
