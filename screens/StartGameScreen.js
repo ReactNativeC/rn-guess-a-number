@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, TextInput, Button, TouchableWithoutFeedback, Keyboard, Alert, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TextInput, Button, TouchableWithoutFeedback, Keyboard, Alert, TouchableOpacity, Dimensions } from 'react-native';
 
 import Card from '../components/Card';
 import Colors from '../constants/colors';
@@ -74,8 +74,8 @@ const StartGameScreen = (props) =>  {
             onChangeText={InputTextHandler}           
           />
           <View style={styles.buttonContainer} >
-            <MainButton onPress={ResetInputHandler}> Reset </MainButton>
-            <MainButton onPress={ConfirmInputHandler}>Confirm</MainButton>                   
+            <MainButton style={styles.button} onPress={ResetInputHandler}>Reset</MainButton>
+            <MainButton style={styles.button} onPress={ConfirmInputHandler}>Confirm</MainButton>                   
           </View>
         </Card> 
         {ConfirmedOutput}
@@ -91,15 +91,15 @@ const styles = StyleSheet.create({
     padding: 10,
   }, 
   inputContainer: {
-    width: 300, 
-    maxWidth: '80%',
+    width: Dimensions.get('window').width, 
+    maxWidth: '90%',
     alignItems: 'center',
     marginVertical: 10,
   },
   buttonContainer: {    
     flexDirection: 'row',
     width: '100%',    
-    justifyContent: 'space-between',    
+    justifyContent: 'space-around',    
     paddingHorizontal: 15,
     marginTop: 20,
   }, 
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,    
   },
   button: {
-    width: '40%',
+    width: Dimensions.get('window').width / 3.6,
   },
   input: {
     width: 50, 
