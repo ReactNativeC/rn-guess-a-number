@@ -55,12 +55,16 @@ const StartGameScreen = (props) =>  {
       </Card>
   }
 
+  //test
+  //print resolution of the device
+  console.log("resuloution(wxh):" + Dimensions.get('window').width.toString() + " x " + Dimensions.get('window').height.toString())
+
   return (
     <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss()}}>
       <View style={styles.screen}>
         <TitleText style={styles.title}>Start a New Game</TitleText>
         <Card style={styles.inputContainer}>
-          <Text style={GlobalStyles.headerTitle}>Select a Number</Text>
+          <TitleText>Select a Number</TitleText>
           <Input 
             style={styles.input}
             blurOnSubmit
@@ -101,13 +105,11 @@ const styles = StyleSheet.create({
     width: '100%',    
     justifyContent: 'space-around',    
     paddingHorizontal: 15,
-    marginTop: 20,
+    marginVertical: Dimensions.get('window').height < 600 ? 5 : 30,
   }, 
-  title: {    
-    marginVertical: 20,    
-  },
   button: {
-    width: Dimensions.get('window').width / 3.6,
+    //minWidth: 120
+    width: Dimensions.get('window').width / 3.4,    
   },
   input: {
     width: 50, 
@@ -116,7 +118,10 @@ const styles = StyleSheet.create({
   summaryContainer: {
     marginTop: 20,
     alignItems: 'center',   
-  }
+  },
+  title: {    
+    marginVertical: 20,    
+  },
 });
 
 export default StartGameScreen;

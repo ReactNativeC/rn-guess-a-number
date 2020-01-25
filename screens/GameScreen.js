@@ -5,7 +5,7 @@ import Card from '../components/Card';
 import GameOverScreen from '../screens/GameOverScreen';
 import TitleText from '../components/TitleText';
 import MainButton from '../components/MainButton';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import BodyText from '../components/BodyText';
 import { render } from 'react-dom';
 
@@ -83,7 +83,7 @@ const GameScreen = (props) => {
       
       <Card style={styles.buttonContainer}>
         <MainButton onPress={nextGuessHandler.bind(this, 'lower')}>
-          <Ionicons name="md-remove" size={24} />
+          <MaterialIcons name="remove" size={24} />
         </MainButton>  
         <MainButton onPress={nextGuessHandler.bind(this, 'greater')}>
           <MaterialIcons name="add" size={24} />
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   }, 
   listItem: {    
     borderWidth: 1,
-    marginVertical: 30,
+    marginVertical: 5,
     borderRadius: 10,
     padding: 10,    
     flexDirection: 'row',

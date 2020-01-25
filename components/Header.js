@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import Colors from '../constants/colors';
-import { processFontFamily } from 'expo-font';
+
 
 const Header = props => {
   return (
@@ -21,7 +21,7 @@ const styles =  StyleSheet.create({
     alignItems: 'center',     
   },
   headerTitle: {
-    fontSize: 25, 
+    fontSize: Dimensions.get('window').width < 400 ? 18 : 25, 
     textAlign: 'center',
     fontFamily: 'OpenSans-Bold',
     color: 'white',

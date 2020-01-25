@@ -1,12 +1,13 @@
 import React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Image, Dimensions, ScrollView } from 'react-native';
 import Colors from '../constants/colors';
 import Card from '../components/Card';
 import TitleText from '../components/TitleText';
 import MainButton from '../components/MainButton';
 const GameOverScreen = (props) => {
   return (
-    <View style={styles.screen}>     
+    <ScrollView>
+    <View style={styles.screen}>         
       <TitleText style={styles.gameOverTitle}> Game Over </TitleText>
       <View style={styles.ImageContainer}>
         <Image style={styles.image}
@@ -16,8 +17,9 @@ const GameOverScreen = (props) => {
       </View>
       <TitleText style={styles.messageText}>Number of Guess Rounds are <TitleText style={styles.messageStats}>{props.rounds}</TitleText> and the user number was: <TitleText style={styles.messageStats}>{props.userNumber}</TitleText></TitleText>
       
-      <MainButton style={styles.button} onPress={props.onReplay} >START NEW Game</MainButton>   
+      <MainButton style={styles.button} onPress={props.onReplay} >START NEW GAME</MainButton>   
     </View>
+    </ScrollView>
   );
 };
 
@@ -28,7 +30,7 @@ const styles = StyleSheet.create({
     justifyContent:'center'
   },
   gameOverTitle: {
-    fontSize: 50, 
+    fontSize: Dimensions.get('window').width < 400 ? 30 : 50, 
     color: Colors.accent
   }, 
   startNewGameTitle: {
@@ -36,11 +38,11 @@ const styles = StyleSheet.create({
     color: Colors.primary
   },
   ImageContainer: {
-    width: 300,
-    height:300,
-    borderRadius: 150,
+    width: Dimensions.get('window').width*0.8,
+    height:Dimensions.get('window').width*0.8,
+    borderRadius: (Dimensions.get('window').width*0.8)/2,
     borderWidth: 2,
-    marginVertical: 40,
+    marginVertical:  Dimensions.get('window').width < 400 ? 10: 40,
     overflow: 'hidden',    
   }, 
   image: {
@@ -48,16 +50,16 @@ const styles = StyleSheet.create({
     height: '100%',
   }, 
   button: {
-    marginVertical: 30,        
+    marginVertical:  Dimensions.get('window').width < 400 ? 10 : 30,        
   },
   messageText: {
     marginHorizontal: 15,
     textAlign: 'center',
-    fontSize: 22,
+    fontSize: Dimensions.get('window').width < 400 ? 14: 22,
   }, 
   messageStats: {
     color: Colors.primary,
-    fontSize: 22,
+    fontSize: Dimensions.get('window').width < 400 ? 14: 22,
   }
 
 

@@ -54,12 +54,13 @@ export default function App() {
     content = <GameScreen userNumber={userNumber} onGameOver={onGameOver}  />;
   else if(guessRounds > 0)
     content = <GameOverScreen rounds={guessRounds} userNumber={userNumber} onReplay={onNewGame} />
-
-  return (
-    <View style={styles.screen}>
-      <Header title="Guess a Number" />
-      {content}
-    </View>
+  //test
+  //content = <GameOverScreen />
+  return (    
+      <View style={styles.screen}>      
+        <Header title="Guess a Number" />
+        {content}      
+      </View>    
   );
 }
 
