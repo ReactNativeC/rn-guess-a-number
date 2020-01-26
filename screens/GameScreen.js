@@ -30,6 +30,7 @@ const GameScreen = (props) => {
   var currentGuess = generateRandomNumber(minNumber.current,maxNumber.current,props.userNumber);
   const [guessedNumber, setGuessedNumber] = useState(currentGuess);
   const [guessList, setGuessList] = useState([currentGuess? currentGuess.toString() : '']);
+  const [availableDeviceHeight, SetAvailableDeviceHeight] = useState(Dimensions.get('window').height);
 
   const renderListItem = (listLength, itemData) => (
     <View  style={styles.listItem}>
@@ -70,6 +71,12 @@ const GameScreen = (props) => {
   //useEffect React hook allows to logic to be executed AFTER every Render cycle
   //If you pass the optional dependencies, then useEffect only executes logic if any of the dependency values changed
   useEffect(() => {  
+    const updateLayout = () => {
+      SetAvailableDeviceHeight(Dimensions.get('window').height);
+    };
+
+    Dimensions.addEventListener('change', updateLayout);
+
     if(guessedNumber === props.userNumber)
       props.onGameOver(guessList.length);  
   },[guessedNumber, userNumber, onGameOver, guessList]);
@@ -79,26 +86,45 @@ const GameScreen = (props) => {
   if(Dimensions.get('window').width < 350)
     listContainerStyle = styles.listContainerSmall;
 
-  return (
-    <ScrollView>
-      <View style={styles.screen}>
-        <TitleText>Opponent's Guess</TitleText>                
-        <NumberContainer style={{marginTop:40}}>{guessedNumber}</NumberContainer>  
-        
-        <Card style={styles.buttonContainer}>
-          <MainButton onPress={nextGuessHandler.bind(this, 'lower')}>
-            <MaterialIcons name="remove" size={24} />
-          </MainButton>  
-          <MainButton onPress={nextGuessHandler.bind(this, 'greater')}>
-            <MaterialIcons name="add" size={24} />
-          </MainButton>                
-        </Card>    
-        <View style={listContainerStyle}>
-          <FlatList contentContainerStyle={styles.list} data={guessList} renderItem={renderListItem.bind(this, guessList.length)} />     
-        </View>
+  let content = 
+    <View style={styles.screen}>
+      <TitleText>Opponent's Guess</TitleText>
+      <NumberContainer style={{ marginTop: 40 }}>{guessedNumber}</NumberContainer>
+      <Card style={styles.buttonContainer}>
+        <MainButton onPress={nextGuessHandler.bind(this, 'lower')}>
+          <MaterialIcons name="remove" size={24} />
+        </MainButton>
+        <MainButton onPress={nextGuessHandler.bind(this, 'greater')}>
+          <MaterialIcons name="add" size={24} />
+        </MainButton>
+      </Card>
+      <View style={listContainerStyle}>
+        <FlatList contentContainerStyle={styles.list} data={guessList} renderItem={renderListItem.bind(this, guessList.length)} />
       </View>
-    </ScrollView>
-    );
+    </View>;
+
+  if(availableDeviceHeight < 500)
+  {
+    content = <View style={styles.screen}>      
+      <TitleText>Opponent's Guess</TitleText>
+      <View style={styles.controlsInLandscape}>
+        <MainButton onPress={nextGuessHandler.bind(this, 'lower')}>
+          <MaterialIcons name="remove" size={24} />
+        </MainButton>
+        <NumberContainer>{guessedNumber}</NumberContainer>
+        <MainButton onPress={nextGuessHandler.bind(this, 'greater')}>
+          <MaterialIcons name="add" size={24} />
+        </MainButton>
+      </View> 
+      <View style={listContainerStyle}>
+        <FlatList contentContainerStyle={styles.list} data={guessList} renderItem={renderListItem.bind(this, guessList.length)} />
+      </View>
+    </View>;
+  }
+
+  return ( 
+    content
+  )
 };
 
 const styles = StyleSheet.create({
@@ -110,7 +136,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',   
-    width: 300, 
+    width: 350, 
     maxWidth: '80%'
   }, 
   listItem: {    
@@ -138,6 +164,13 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '60%',
     marginTop:  20
+  }, 
+  controlsInLandscape: {
+    flexDirection: 'row',
+    width: '50%', 
+    justifyContent: 'space-around', 
+    alignItems: 'center', 
+    marginTop: 10 
   }
 });
 
