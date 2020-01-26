@@ -15,27 +15,19 @@ const StartGameScreen = (props) =>  {
   const [confirmed, setConfirmed] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState('');
   const [buttonWidth, setButtonWidth] = useState(Dimensions.get('window').width / 3.4);
-
-  console.log('start of the rendering. width: ' + buttonWidth);
   
   useEffect(() => {
     const updateLayout = () => {
       setButtonWidth(Dimensions.get('window').width / 3.4);
-      console.log('layout updated');
-      console.log('width: ' + buttonWidth);
     }
     Dimensions.addEventListener('change',updateLayout);
-    console.log('useEffect - outside of return');
-    
+
     //cleaning up previously added listeners. 
     //this runs before the above code
     return () => {
-      console.log('useEffect - inside return');
       Dimensions.removeEventListener('change', updateLayout);
     };    
   });
-
-
 
   const InputTextHandler = (inputText) => {
     setEnteredValue(inputText.replace(/[^0-9]/g, ''));
@@ -135,9 +127,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginVertical: Dimensions.get('window').height < 600 ? 5 : 30,
   }, 
-  button: {
-    width: StartGameScreen.buttonWidth,    
-  },
   input: {
     width: 50, 
     textAlign: 'center'
