@@ -1,15 +1,10 @@
 import React from 'react';
-import { Text, View, StyleSheet, ButtonComponent, Dimensions, TouchableNativeFeedback, TouchableOpacity, Platform, Button } from 'react-native';
+import { Text, View, StyleSheet, ButtonComponent, Dimensions, TouchableOpacity } from 'react-native';
 import Colors from '../constants/colors';
-import { hide } from 'expo/build/launch/SplashScreen';
-
 
 const MainButton = (props) => {
   let ButtonComponent  = TouchableOpacity;
-
-  if(Platform.OS == 'android' && Platform.Version >= 21)
-    ButtonComponent = TouchableNativeFeedback;
-
+  
   return ( 
     <View style={styles.buttonContainer}>
       <ButtonComponent activeOpacity={0.60} onPress={props.onPress}>
