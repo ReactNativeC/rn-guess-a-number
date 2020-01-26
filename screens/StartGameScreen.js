@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, TextInput, Button, TouchableWithoutFeedback, Keyboard, Alert, TouchableOpacity, Dimensions, ScrollView, KeyboardAvoidingView } from 'react-native';
 
 import Card from '../components/Card';
@@ -14,6 +14,28 @@ const StartGameScreen = (props) =>  {
   const [enteredValue, setEnteredValue] = useState('');
   const [confirmed, setConfirmed] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState('');
+  const [buttonWidth, setButtonWidth] = useState(Dimensions.get('window').width / 3.4);
+
+  console.log('start of the rendering. width: ' + buttonWidth);
+  
+  useEffect(() => {
+    const updateLayout = () => {
+      setButtonWidth(Dimensions.get('window').width / 3.4);
+      console.log('layout updated');
+      console.log('width: ' + buttonWidth);
+    }
+    Dimensions.addEventListener('change',updateLayout);
+    console.log('useEffect - outside of return');
+    
+    //cleaning up previously added listeners. 
+    //this runs before the above code
+    return () => {
+      console.log('useEffect - inside return');
+      Dimensions.removeEventListener('change', updateLayout);
+    };    
+  });
+
+
 
   const InputTextHandler = (inputText) => {
     setEnteredValue(inputText.replace(/[^0-9]/g, ''));
@@ -57,11 +79,11 @@ const StartGameScreen = (props) =>  {
 
   //test
   //print resolution of the device
-  console.log("resuloution(wxh):" + Dimensions.get('window').width.toString() + " x " + Dimensions.get('window').height.toString())
+  //console.log("resuloution(wxh):" + Dimensions.get('window').width.toString() + " x " + Dimensions.get('window').height.toString())
 
   return (
     <ScrollView>
-      <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={10}>
+      <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={50}>
         <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss()}}>
           <View style={styles.screen}>
             <TitleText style={styles.title}>Start a New Game</TitleText>
@@ -80,8 +102,8 @@ const StartGameScreen = (props) =>  {
                 onChangeText={InputTextHandler}           
               />
               <View style={styles.buttonContainer} >
-                <MainButton style={styles.button} onPress={ResetInputHandler}>Reset</MainButton>
-                <MainButton style={styles.button} onPress={ConfirmInputHandler}>Confirm</MainButton>                   
+                <MainButton style={{width: buttonWidth}} onPress={ResetInputHandler}>Reset</MainButton>
+                <MainButton style={{width: buttonWidth}} onPress={ConfirmInputHandler}>Confirm</MainButton>                   
               </View>
             </Card> 
             {ConfirmedOutput}
@@ -114,7 +136,7 @@ const styles = StyleSheet.create({
     marginVertical: Dimensions.get('window').height < 600 ? 5 : 30,
   }, 
   button: {
-    width: Dimensions.get('window').width / 3.4,    
+    width: StartGameScreen.buttonWidth,    
   },
   input: {
     width: 50, 
