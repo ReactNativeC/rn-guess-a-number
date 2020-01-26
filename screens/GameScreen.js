@@ -1,13 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import {Text, View, StyleSheet, Button, Alert, ScrollView, FlatList, Dimensions} from 'react-native';
+import {Text, View, StyleSheet, Alert, ScrollView, FlatList, Dimensions} from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
-import GameOverScreen from '../screens/GameOverScreen';
 import TitleText from '../components/TitleText';
 import MainButton from '../components/MainButton';
 import { MaterialIcons } from '@expo/vector-icons';
 import BodyText from '../components/BodyText';
-import { render } from 'react-dom';
 
 const GameScreen = (props) => {
   const generateRandomNumber = (min, max, exclude) => {
@@ -82,22 +80,24 @@ const GameScreen = (props) => {
     listContainerStyle = styles.listContainerSmall;
 
   return (
-    <View style={styles.screen}>
-      <TitleText>Opponent's Guess</TitleText>                
-      <NumberContainer style={{marginTop:40}}>{guessedNumber}</NumberContainer>  
-      
-      <Card style={styles.buttonContainer}>
-        <MainButton onPress={nextGuessHandler.bind(this, 'lower')}>
-          <MaterialIcons name="remove" size={24} />
-        </MainButton>  
-        <MainButton onPress={nextGuessHandler.bind(this, 'greater')}>
-          <MaterialIcons name="add" size={24} />
-        </MainButton>                
-      </Card>    
-      <View style={listContainerStyle}>
-        <FlatList contentContainerStyle={styles.list} data={guessList} renderItem={renderListItem.bind(this, guessList.length)} />     
+    <ScrollView>
+      <View style={styles.screen}>
+        <TitleText>Opponent's Guess</TitleText>                
+        <NumberContainer style={{marginTop:40}}>{guessedNumber}</NumberContainer>  
+        
+        <Card style={styles.buttonContainer}>
+          <MainButton onPress={nextGuessHandler.bind(this, 'lower')}>
+            <MaterialIcons name="remove" size={24} />
+          </MainButton>  
+          <MainButton onPress={nextGuessHandler.bind(this, 'greater')}>
+            <MaterialIcons name="add" size={24} />
+          </MainButton>                
+        </Card>    
+        <View style={listContainerStyle}>
+          <FlatList contentContainerStyle={styles.list} data={guessList} renderItem={renderListItem.bind(this, guessList.length)} />     
+        </View>
       </View>
-    </View>
+    </ScrollView>
     );
 };
 
