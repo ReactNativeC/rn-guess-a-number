@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     borderRadius: 10, 
   }, 
   number: {
-    fontSize: Dimensions.get('window').width < 400 ? 14 : 22, 
+    fontSize: Dimensions.get('window').width < 400 ? 16 : 22, 
     color: Colors.accent,
   }
 

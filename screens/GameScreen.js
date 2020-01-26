@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import {Text, View, StyleSheet, Button, Alert, ScrollView, FlatList} from 'react-native';
+import {Text, View, StyleSheet, Button, Alert, ScrollView, FlatList, Dimensions} from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import GameOverScreen from '../screens/GameOverScreen';
@@ -76,6 +76,11 @@ const GameScreen = (props) => {
       props.onGameOver(guessList.length);  
   },[guessedNumber, userNumber, onGameOver, guessList]);
 
+  let listContainerStyle = styles.listContainerBig;
+
+  if(Dimensions.get('window').width < 350)
+    listContainerStyle = styles.listContainerSmall;
+
   return (
     <View style={styles.screen}>
       <TitleText>Opponent's Guess</TitleText>                
@@ -89,11 +94,11 @@ const GameScreen = (props) => {
           <MaterialIcons name="add" size={24} />
         </MainButton>                
       </Card>    
-      <View style={styles.listContainer}>
+      <View style={listContainerStyle}>
         <FlatList contentContainerStyle={styles.list} data={guessList} renderItem={renderListItem.bind(this, guessList.length)} />     
       </View>
     </View>
-    );34
+    );
 };
 
 const styles = StyleSheet.create({
@@ -112,7 +117,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginVertical: 5,
     borderRadius: 10,
-    padding: 10,    
+    padding: Dimensions.get('window').width > 350 ? 10 : 5,    
     flexDirection: 'row',
     justifyContent: 'space-around',  
     backgroundColor: 'white',
@@ -124,10 +129,15 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     flexGrow: 1,
   },
-  listContainer: {
+  listContainerBig: {
     flex: 1,
-    width: '50%',
-    marginTop: 20,
+    width: '80%',
+    marginTop:  20 
+  },
+  listContainerSmall: {
+    flex: 1,
+    width: '60%',
+    marginTop:  20
   }
 });
 
