@@ -1,17 +1,23 @@
 import React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, ButtonComponent, Dimensions, TouchableNativeFeedback, TouchableOpacity, Platform, Button } from 'react-native';
 import Colors from '../constants/colors';
+import { hide } from 'expo/build/launch/SplashScreen';
 
 
 const MainButton = (props) => {
-  return (
-    <TouchableOpacity activeOpacity={0.60} onPress={props.onPress}>
+  let ButtonComponent  = TouchableOpacity;
 
-      <View style={{ ...styles.button, ...props.style }}>
-        <Text style={styles.buttonText}>{props.children}</Text>
-      </View>
+  if(Platform.OS == 'android' && Platform.Version >= 21)
+    ButtonComponent = TouchableNativeFeedback;
 
-    </TouchableOpacity>
+  return ( 
+    <View style={styles.buttonContainer}>
+      <ButtonComponent activeOpacity={0.60} onPress={props.onPress}>
+        <View style={{ ...styles.button, ...props.style }}>
+          <Text style={styles.buttonText}>{props.children}</Text>
+        </View>
+      </ButtonComponent>
+    </View>   
   );
 }
 
@@ -23,6 +29,10 @@ const styles = StyleSheet.create({
     borderRadius: Dimensions.get('window').width < 400 ? 15 : 25,
     alignItems: 'center',
     minWidth: Dimensions.get('window').width /5,    
+  },
+  buttonContainer: {
+    borderRadius: Dimensions.get('window').width < 400 ? 15 : 25,
+    overflow: "hidden"
   },
   buttonText: {
     fontFamily: 'OpenSans-Bold',
