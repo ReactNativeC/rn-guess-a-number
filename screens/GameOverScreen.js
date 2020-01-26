@@ -1,15 +1,27 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image, Dimensions, ScrollView } from 'react-native';
 import Colors from '../constants/colors';
 import Card from '../components/Card';
 import TitleText from '../components/TitleText';
 import MainButton from '../components/MainButton';
 const GameOverScreen = (props) => {
+  const [availableDeviceHeight, setAvailableDeviceHeight] = useState(Dimensions.get('window').height);
+
+  useEffect(() => {
+    const updateLayout = () => {
+      setAvailableDeviceHeight(Dimensions.get('window').height);
+    }
+    Dimensions.addEventListener('change', updateLayout);
+    return () => {
+      Dimensions.removeEventListener('change', updateLayout);
+    }
+  });
+    
   return (
     <ScrollView>
     <View style={styles.screen}>         
       <TitleText style={styles.gameOverTitle}> Game Over </TitleText>
-      <View style={styles.ImageContainer}>
+      <View style={availableDeviceHeight  < 500? styles.ImageContainerInLandscapeMopde : styles.ImageContainer}>
         <Image style={styles.image}
           source={{uri: 'https://www.fodors.com/wp-content/uploads/2019/07/NeedToKnowNYC__HERO_Midtown-West.jpg'}} 
           resizeMode='cover'
@@ -45,12 +57,20 @@ const styles = StyleSheet.create({
     marginVertical:  Dimensions.get('window').width < 400 ? 10: 40,
     overflow: 'hidden',    
   }, 
+  ImageContainerInLandscapeMopde: {
+    width: Dimensions.get('window').height*0.3,
+    height:Dimensions.get('window').height*0.3,
+    borderRadius: (Dimensions.get('window').width*0.3)/2,
+    marginVertical: 5,
+    borderWidth: 2,
+    overflow: 'hidden',  
+  },
   image: {
     width: '100%',
     height: '100%',
   }, 
   button: {
-    marginVertical:  Dimensions.get('window').width < 400 ? 10 : 30,        
+    marginVertical:  Dimensions.get('window').width < 400 ? 10 : 20,        
   },
   messageText: {
     marginHorizontal: 15,

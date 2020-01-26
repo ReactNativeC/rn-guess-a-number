@@ -14,7 +14,7 @@ const GameScreen = (props) => {
     
     const rnd = Math.random();    
     const randomNumber = Math.floor(rnd*(max-min)) + min; 
-    
+
     // added max-min > 2 to avoiding infinite recursion loop
     if(randomNumber === exclude && max-min > 2)
       generateRandomNumber(min, max, exclude);
@@ -76,9 +76,15 @@ const GameScreen = (props) => {
     };
 
     Dimensions.addEventListener('change', updateLayout);
-
+    
     if(guessedNumber === props.userNumber)
       props.onGameOver(guessList.length);  
+
+    //cleaning up previously added listeners. 
+    //this runs before the above code
+    return () => {
+      Dimensions.removeEventListener('change', updateLayout);
+    };
   },[guessedNumber, userNumber, onGameOver, guessList]);
 
   let listContainerStyle = styles.listContainerBig;
